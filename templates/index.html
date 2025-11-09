@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrowserUse Control Room</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+    <main class="layout">
+        <section class="panel">
+            <h1>Agent A</h1>
+            <p class="subtitle">Describe any web task. Agent B will plan & execute.</p>
+            <form id="task-form">
+                <textarea id="prompt" placeholder="e.g. Find the latest release notes for the aiden repo on GitHub and summarize the changes." required></textarea>
+                <button type="submit">Send to Agents</button>
+            </form>
+            <p id="form-status" class="status"></p>
+        </section>
+        <section class="panel">
+            <h2>Recent Runs</h2>
+            <div id="task-list" class="tasks"></div>
+        </section>
+    </main>
+    <script src="/static/app.js" type="module"></script>
+</body>
+</html>
