@@ -96,15 +96,6 @@ uvicorn server:app --reload --port 8000
 - `agent_history.gif` at the repo root is overwritten with the latest run when `generate_gif` is enabled.
 - Download watchdog logs (from `browser_use`) surface in the console.
 
-## Troubleshooting
-
-| Symptom | Likely cause / fix |
-| --- | --- |
-| `RuntimeError: OPENAI_API_KEY is required` | Ensure `.env` is loaded (activate venv before running) and key is valid. |
-| Browser launches with your personal tabs | Double-check `CHROME_USER_DATA_DIR`/`CHROME_PROFILE_DIRECTORY`; you may still be pointing at the default profile. |
-| UI loads but no tasks execute | Inspect `server.py` logs. Missing `BROWSER_USE_API_KEY` or planner exceptions will mark tasks as failed; check exports folder for error JSON. |
-| Downloads pile up from google.com | That’s Chrome grabbing `hpba` telemetry files. They’re harmless; the downloads watchdog logs them automatically. |
-
 ## Project structure
 
 ```
