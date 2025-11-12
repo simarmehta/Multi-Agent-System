@@ -15,7 +15,7 @@ def trace_to_markdown(folder):
     with open(os.path.join(folder, "trace.md"), "w") as f:
         f.write(md)
 
-    print(f"✅ Markdown guide created at {folder}/trace.md")
+    print(f" Markdown guide created at {folder}/trace.md")
 
 if __name__ == "__main__":
     import sys

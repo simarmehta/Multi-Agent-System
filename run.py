@@ -14,7 +14,7 @@ async def main():
     try:
         task = agent_a.create_task(user_input, user_id="cli-user")
     except ValueError as exc:
-        print(f" Agent A rejected the request: {exc}")
+        print(f"Agent A rejected the request: {exc}")
         return
 
     print(f"\n Task accepted (id: {task.id}). Agent B is planning...\n")

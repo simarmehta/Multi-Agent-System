@@ -61,11 +61,12 @@ class GPTPlanner:
                 {
                     "role": "system",
                     "content": (
-                        "You write concise, actionable plans for a browser automation agent.\n"
+                        "You are a task planner for a browser automation agent. "
+                        "Stay strictly on the user request, avoid inventing extra goals or sub‑tasks.\n"
                         "Respond ONLY with valid JSON that matches this schema:\n"
                         f"{json.dumps(PLAN_SCHEMA)}\n"
-                        "Prefer fewer than 5 focused steps. "
-                        "If no starting URL is evident, set it to https://www.google.com."
+                        "Limit yourself to the essential steps (ideally ≤5). "
+                        "If the user does not mention a starting URL, default to https://www.google.com."
                     ),
                 },
                 {"role": "user", "content": prompt.strip()},
