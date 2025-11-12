@@ -40,13 +40,12 @@ OPENAI_API_KEY=sk-your-openai-key
 # BrowserUse LLM (bu-1-0 / Anthropic via browser-use)
 BROWSER_USE_API_KEY=bu_your_key
 
-# Optional: point BrowserUse to an installed Chrome profile
-CHROME_EXECUTABLE=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
-CHROME_USER_DATA_DIR=~/browser-profiles/browser-use
-CHROME_PROFILE_DIRECTORY=browser-control
+# Optional: point BrowserUse to an installed Chrome profile, this is for authentication(complicated becuase of Google CDP update)
+CHROME_EXECUTABLE="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+CHROME_USER_DATA_DIR=~/browser-profiles/browser-use #new profile created only for browseruse
+CHROME_PROFILE_DIRECTORY=browser-control #basically your profile here
 BROWSER_HEADLESS=false
 BROWSER_EXTRA_ARGS=--disable-notifications
-MAX_CONCURRENT_RUNS=2
 ```
 
 Any variable can be omitted to fall back to BrowserUse’s managed Chromium. `BROWSER_HEADLESS` accepts `true`/`false`. `BROWSER_EXTRA_ARGS` is a space-delimited list fed directly to Chrome. `MAX_CONCURRENT_RUNS` caps how many BrowserUse sessions can execute at once (defaults to 2).
