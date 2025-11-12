@@ -93,7 +93,6 @@ uvicorn server:app --reload --port 8000
 
 - `exports/run_*`: trace JSON, plan JSON, run metadata, animated GIF (`agent_history.gif`), and per-step screenshots (`step_n.png`).
 - `agent_history.gif` at the repo root is overwritten with the latest run when `generate_gif` is enabled.
-- Download watchdog logs (from `browser_use`) surface in the console.
 
 ## Project structure
 
