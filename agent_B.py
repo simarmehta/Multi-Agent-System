@@ -7,6 +7,7 @@ import os
 import shutil
 import asyncio
 from datetime import datetime
+from uuid import uuid4
 from typing import Any, Dict, List, Optional
 from dotenv import load_dotenv
 
@@ -17,7 +18,7 @@ from planner import GPTPlanner, render_plan_for_agent
 load_dotenv()
 
 EXPORT_DIR = "exports"
-DEFAULT_MAX_STEPS = 20
+DEFAULT_MAX_STEPS = 50
 
 _planner: Optional[GPTPlanner] = None
 
@@ -31,7 +32,7 @@ def _get_planner() -> GPTPlanner:
 
 def _save_history_artifacts(history, export_path: str, plan: Dict[str, Any], prompt: str):
     """
-    Persist the agent run artifacts (trace + screenshots) into the export folder.
+    Save the agent run basically (trace + screenshots) into the export folder.
     """
     trace_file = os.path.join(export_path, "trace.json")
     history.save_to_file(trace_file)
@@ -55,8 +56,7 @@ def _save_history_artifacts(history, export_path: str, plan: Dict[str, Any], pro
 
 def _build_browser() -> Browser:
     """
-    Build a Browser instance that reuses a local Chrome profile when env vars are set.
-    Falls back to default BrowserUse Chromium when not configured.
+    Build a browser instance that reuses a local Chrome profile based on environment variables.
     """
     def _clean(value: Optional[str]) -> Optional[str]:
         if not value:
@@ -91,12 +91,12 @@ def _build_browser() -> Browser:
 
 
 async def run_ui_task(task_prompt: str):
-    # Create output directory
-    timestamp = datetime.now().strftime("run_%Y%m%d_%H%M")
-    path = os.path.join(EXPORT_DIR, timestamp)
+    timestamp = datetime.now().strftime("run_%Y%m%d_%H%M%S")
+    unique_id = uuid4().hex[:6]
+    path = os.path.join(EXPORT_DIR, f"{timestamp}_{unique_id}")
     os.makedirs(path, exist_ok=True)
 
-    print(f"\n🧠 Agent B executing:\nPrompt: {task_prompt}\n")
+    print(f"\n Agent B executing:\nPrompt: {task_prompt}\n")
 
     planner = _get_planner()
     plan = await planner.create_plan(task_prompt)
@@ -112,10 +112,8 @@ async def run_ui_task(task_prompt: str):
         }
     ]
 
-    # Create LLM
     llm = ChatBrowserUse(api_key=os.getenv("BROWSER_USE_API_KEY"))
 
-    # Create the agent
     agent = Agent(
         task=instructions,
         llm=llm,
@@ -125,11 +123,9 @@ async def run_ui_task(task_prompt: str):
         initial_actions=initial_actions,
     )
 
-    # Run the agent
     history = await agent.run(max_steps=DEFAULT_MAX_STEPS)
 
-    # Save results
     _save_history_artifacts(history, path, plan, task_prompt)
 
-    print(f"📸 Task completed. Trace saved in: {path}")
+    print(f" Task completed. Trace saved in: {path}")
     return {"export_path": path, "plan": plan}

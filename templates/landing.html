@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrowserUse Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body class="landing-only">
+    <div class="gradient-bg" aria-hidden="true"></div>
+    <div class="app-shell">
+        <section class="hero-simple fade-in">
+            <div>
+                <p class="eyebrow">BrowserUse Ops</p>
+                <h1>Plan with Agent A. Execute with Agent B. Monitor everything.</h1>
+                <p>
+                    Intake prompts become structured plans, run by a Chrome-based executor that records every move.
+                    Launch the control room to queue work, watch telemetry, or pull artifacts.
+                </p>
+                <div class="cta-row">
+                    <a class="btn btn--primary" href="/control">
+                        <span>Launch Control Room</span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    <a class="btn btn--ghost" href="/control">Go now</a>
+                </div>
+            </div>
+            <ul class="simple-list">
+                <li><strong>Agent A:</strong> validates prompts, stores `TaskRecord`, calls GPTPlanner.</li>
+                <li><strong>Agent B:</strong> runs browser-use with your Chrome profile and download watchdogs.</li>
+                <li><strong>Control room:</strong> FastAPI + JS dashboard with metrics, queue, and artifacts.</li>
+            </ul>
+        </section>
+
+        <section class="landing-sections">
+            <article>
+                <h3>Intake</h3>
+                <p>Submit a task via CLI or UI. Agent A creates a `TaskRecord` and enqueues it.</p>
+            </article>
+            <article>
+                <h3>Execution</h3>
+                <p>Agent B loads Chrome, follows the GPT plan, captures screenshots, trace.json, and plan.json.</p>
+            </article>
+            <article>
+                <h3>Monitoring</h3>
+                <p>Open `/control` for live status, metrics from `/api/metrics`, and links to `/exports/run_*`.</p>
+            </article>
+        </section>
+    </div>
+</body>
+</html>

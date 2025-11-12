@@ -4,24 +4,95 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BrowserUse Control Room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
     <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-    <main class="layout">
-        <section class="panel">
-            <h1>Agent A</h1>
-            <p class="subtitle">Describe any web task. Agent B will plan & execute.</p>
-            <form id="task-form">
-                <textarea id="prompt" placeholder="e.g. Find the latest release notes for the aiden repo on GitHub and summarize the changes." required></textarea>
-                <button type="submit">Send to Agents</button>
-            </form>
-            <p id="form-status" class="status"></p>
-        </section>
-        <section class="panel">
-            <h2>Recent Runs</h2>
-            <div id="task-list" class="tasks"></div>
-        </section>
-    </main>
+    <div class="gradient-bg" aria-hidden="true"></div>
+    <div class="app-shell">
+        <header class="hero fade-in">
+            <div class="hero__badge">BrowserUse Control Room</div>
+            <h1>Launch precise browser automations with total clarity.</h1>
+            <p>
+                Agent A refines the brief. Agent B orchestrates the browser. Describe any workflow and watch
+                the run history stream in real-time.
+            </p>
+            <ul class="hero__stats">
+                <li>
+                    <span class="label">Avg. runtime</span>
+                    <span class="value" data-metric="avg-runtime">—</span>
+                </li>
+                <li>
+                    <span class="label">Completed runs</span>
+                    <span class="value" data-metric="success-count">—</span>
+                </li>
+                <li>
+                    <span class="label">Latest export</span>
+                    <span class="value" data-metric="latest-export">—</span>
+                </li>
+            </ul>
+        </header>
+
+        <main class="dashboard">
+            <section class="panel panel--primary lift">
+                <div class="panel__header">
+                    <div>
+                        <p class="eyebrow">Agent A Intake</p>
+                        <h2>Describe the objective</h2>
+                        <p class="subtitle">Structured prompts in, reliable multi-step runs out.</p>
+                    </div>
+                    <div class="chip-row">
+                        <span class="chip">Live sync</span>
+                        <span class="chip chip--accent">Auto-plan</span>
+                    </div>
+                </div>
+
+                <form id="task-form" class="task-form">
+                    <label for="prompt" class="label">Prompt</label>
+                    <textarea
+                        id="prompt"
+                        placeholder="e.g. Audit Linear’s latest changelog and prepare a 4-bullet summary in Notion."
+                        required
+                    ></textarea>
+                    <div class="form-footer">
+                        <p id="form-status" class="status" role="status" aria-live="polite"></p>
+                        <button type="submit" class="btn btn--primary">
+                            <span>Send to Agent</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M5 12h14M13 6l6 6-6 6"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="panel panel--glass lift">
+                <div class="panel__header">
+                    <div>
+                        <p class="eyebrow">Agent B Telemetry</p>
+                        <h2>Recent runs</h2>
+                        <p class="subtitle">Newest first. Auto-refresh every few seconds.</p>
+                    </div>
+                    <button type="button" class="btn btn--ghost" id="refresh-button">
+                        Refresh now
+                    </button>
+                </div>
+                <div id="task-list" class="tasks"></div>
+            </section>
+        </main>
+    </div>
     <script src="/static/app.js" type="module"></script>
 </body>
 </html>

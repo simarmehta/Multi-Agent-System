@@ -10,8 +10,6 @@ from uuid import uuid4
 
 @dataclass
 class TaskRecord:
-    """Canonical structure shared between Agent A, Agent B, and the API/UI."""
-
     prompt: str
     user_id: Optional[str] = None
     source: str = "web-ui"
@@ -22,10 +20,11 @@ class TaskRecord:
     plan: Optional[Dict[str, Any]] = None
     export_path: Optional[str] = None
     error: Optional[str] = None
+    finished_at: Optional[str] = None
+    duration_seconds: Optional[float] = None
 
     def to_dict(self) -> Dict[str, Any]:
         data = asdict(self)
-        # dataclasses replace None with None automatically; keep structure predictable for the API
         return data
 
     def mark_running(self) -> None:
@@ -36,16 +35,26 @@ class TaskRecord:
         self.status = "completed"
         self.export_path = export_path
         self.plan = plan
-        self.updated_at = datetime.now(timezone.utc).isoformat()
+        self._mark_finished()
 
     def mark_failed(self, error: str) -> None:
         self.status = "failed"
         self.error = error
-        self.updated_at = datetime.now(timezone.utc).isoformat()
+        self._mark_finished()
+
+    def _mark_finished(self) -> None:
+        now = datetime.now(timezone.utc)
+        self.updated_at = now.isoformat()
+        self.finished_at = self.updated_at
+        try:
+            started = datetime.fromisoformat(self.created_at)
+            delta = (now - started).total_seconds()
+            self.duration_seconds = max(delta, 0.0)
+        except ValueError:
+            self.duration_seconds = None
 
 
 class AgentA:
-    """Minimal dispatcher that converts free-form UI requests into task records."""
 
     def __init__(self, source: str = "web-ui"):
         self.source = source
@@ -53,7 +62,7 @@ class AgentA:
     def create_task(self, prompt: str, user_id: Optional[str] = None) -> TaskRecord:
         text = (prompt or "").strip()
         if not text:
-            raise ValueError("Task prompt cannot be empty.")
+            raise ValueError("Task prompt cannot be empty")
 
         record = TaskRecord(prompt=text, user_id=user_id, source=self.source)
         return record

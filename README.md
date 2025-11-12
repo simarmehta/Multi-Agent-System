@@ -1,0 +1,131 @@
+# BrowserUse Control Room
+
+A dual-agent control surface that turns natural-language prompts into autonomous browser runs. Agent A validates and queues requests, the planner translates them into a deterministic plan, and Agent B executes the workflow through [browser-use](https://github.com/browser-use/browser-use) with full telemetry and artifact capture.
+
+## Highlights
+
+- 🔀 **Two-agent workflow:** Agent A sanitizes prompts and tracks status while Agent B performs the live browser automation.
+- 🧠 **Structured planning:** `planner.py` calls GPT‑4o to emit JSON plans (objective, steps, success criteria) before any browser action happens.
+- 🖥️ **FastAPI dashboard:** `server.py` + `templates/index.html` provide a glassmorphism UI with live task polling and artifact links.
+- 📦 **Artifact trail:** Every run writes traces, plans, JSON metadata, GIFs, and per-step screenshots under `exports/run_*`.
+
+## Requirements
+
+- Python 3.11+
+- Google Chrome/Chromium (recommended) or the default browser-use Chromium build
+- API keys:
+  - `OPENAI_API_KEY` for planning
+  - `BROWSER_USE_API_KEY` for BrowserUse/LLM control
+
+## Setup
+
+### 1. Install dependencies
+
+```bash
+git clone <repo-url>
+cd multiagent
+python -m venv venv
+source venv/bin/activate            # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 2. Configure environment variables
+
+Create a `.env` file in the project root (loaded via `python-dotenv`). At minimum you need:
+
+```env
+# Planning LLM
+OPENAI_API_KEY=sk-your-openai-key
+
+# BrowserUse LLM (bu-1-0 / Anthropic via browser-use)
+BROWSER_USE_API_KEY=bu_your_key
+
+# Optional: point BrowserUse to an installed Chrome profile
+CHROME_EXECUTABLE=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+CHROME_USER_DATA_DIR=~/browser-profiles/browser-use
+CHROME_PROFILE_DIRECTORY=browser-control
+BROWSER_HEADLESS=false
+BROWSER_EXTRA_ARGS=--disable-notifications
+MAX_CONCURRENT_RUNS=2
+```
+
+Any variable can be omitted to fall back to BrowserUse’s managed Chromium. `BROWSER_HEADLESS` accepts `true`/`false`. `BROWSER_EXTRA_ARGS` is a space-delimited list fed directly to Chrome. `MAX_CONCURRENT_RUNS` caps how many BrowserUse sessions can execute at once (defaults to 2).
+
+### 3. Create a fresh Chrome profile for the agent
+
+Running automations against your primary profile is noisy and risks cross-contamination. To create a dedicated profile:
+
+1. Pick a user-data directory, e.g. `~/browser-profiles/browser-use`. Ensure the directory exists.
+2. Launch Chrome manually with that directory to bootstrap a brand-new profile. Examples:
+
+   **macOS / Linux**
+   ```bash
+   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+     --user-data-dir=~/browser-profiles/browser-use \
+     --profile-directory=browser-control
+   ```
+
+   **Windows (PowerShell)**
+   ```powershell
+   & "C:\Program Files\Google\Chrome\Application\chrome.exe" `
+     --user-data-dir="$env:USERPROFILE\browser-profiles\browser-use" `
+     --profile-directory=browser-control
+   ```
+
+3. Sign out of any personal accounts if prompted, set desired defaults (extensions, zoom, language), then close Chrome.
+4. Copy the same paths into `.env` as shown above (`CHROME_USER_DATA_DIR`, `CHROME_PROFILE_DIRECTORY`). The automation agent will now reuse that isolated context.
+
+If you ever need to reset the profile, simply delete the chosen directory and repeat the bootstrap command.
+
+## Running the agents
+
+### CLI run (single task)
+
+```bash
+python run.py
+```
+
+- Prompts for a natural-language instruction.
+- Agent A validates, Agent B executes via BrowserUse.
+- Outputs artifacts to `exports/run_YYYYMMDD_HHMM/`.
+
+### Web control room
+
+```bash
+uvicorn server:app --reload --port 8000
+```
+
+- Visit `http://localhost:8000` for the landing overview.
+- Jump into `http://localhost:8000/control` for the live control room.
+- `/api/tasks` exposes JSON for external tooling.
+- `/api/metrics` reports averages/counts for the hero widgets and external monitoring.
+
+## Artifacts & downloads
+
+- `exports/run_*`: trace JSON, plan JSON, run metadata, animated GIF (`agent_history.gif`), and per-step screenshots (`step_n.png`).
+- `agent_history.gif` at the repo root is overwritten with the latest run when `generate_gif` is enabled.
+- Download watchdog logs (from `browser_use`) surface in the console so you know when Gmail/Drive/etc. prompt downloads.
+
+## Troubleshooting
+
+| Symptom | Likely cause / fix |
+| --- | --- |
+| `RuntimeError: OPENAI_API_KEY is required` | Ensure `.env` is loaded (activate venv before running) and key is valid. |
+| Browser launches with your personal tabs | Double-check `CHROME_USER_DATA_DIR`/`CHROME_PROFILE_DIRECTORY`; you may still be pointing at the default profile. |
+| UI loads but no tasks execute | Inspect `server.py` logs. Missing `BROWSER_USE_API_KEY` or planner exceptions will mark tasks as failed; check exports folder for error JSON. |
+| Downloads pile up from google.com | That’s Chrome grabbing `hpba` telemetry files. They’re harmless; the downloads watchdog logs them automatically. |
+
+## Project structure
+
+```
+agent_A.py        # Task intake + TaskRecord dataclass
+agent_B.py        # BrowserUse orchestration, artifact saving, Chrome profile wiring
+planner.py        # GPT-4o planning + plan rendering
+server.py         # FastAPI API + UI endpoints
+static/           # app.js + styles for the dashboard
+templates/        # Jinja2 templates (index.html)
+exports/          # Generated artifacts (gitignored)
+run.py            # CLI entrypoint
+```
+
+Feel free to open issues/PRs for additional integrations (Slack alerts, real-time screenshot streaming, etc.). The README will stay updated as the control room evolves.
