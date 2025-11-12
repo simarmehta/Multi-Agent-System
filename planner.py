@@ -77,7 +77,6 @@ class GPTPlanner:
             content = response.output[0].content[0].text  # type: ignore[attr-defined]
             text = content.strip()
             if text.startswith("```"):
-                # Handle fenced code blocks like ```json ... ```
                 text = text.strip("`")
                 if text.startswith("json"):
                     text = text[4:]
