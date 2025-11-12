@@ -1,0 +1,38 @@
+{
+  "objective": "Search and apply a filter based on status on the DB1 page in Notion.",
+  "starting_url": "https://www.google.com",
+  "notes": "Ensure you are logged into Notion before starting.",
+  "steps": [
+    {
+      "title": "Navigate to Notion",
+      "action": "Open the Notion application or website.",
+      "expected_result": "Notion homepage is displayed."
+    },
+    {
+      "title": "Access DB1 Page",
+      "action": "Locate and click on the DB1 page.",
+      "expected_result": "DB1 page is opened."
+    },
+    {
+      "title": "Open Filter Options",
+      "action": "Click on the filter icon or option.",
+      "expected_result": "Filter options are displayed."
+    },
+    {
+      "title": "Select Status Filter",
+      "action": "Choose the status filter from the options.",
+      "expected_result": "Status filter is applied to the DB1 page."
+    },
+    {
+      "title": "Verify Filter Application",
+      "action": "Check that the items displayed match the selected status.",
+      "expected_result": "Items are filtered based on the selected status."
+    }
+  ],
+  "success_criteria": [
+    "DB1 page is accessed successfully.",
+    "Filter options are visible.",
+    "Status filter is applied correctly.",
+    "Displayed items match the selected status."
+  ]
+}

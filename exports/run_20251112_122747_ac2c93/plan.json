@@ -1,0 +1,27 @@
+{
+  "objective": "Search for 'Generative AI' on Google News and filter results by Past Hour.",
+  "starting_url": "https://www.google.com",
+  "notes": "Ensure to navigate to the News section and apply the filter.",
+  "steps": [
+    {
+      "title": "Open Google News",
+      "action": "Navigate to https://news.google.com",
+      "expected_result": "Google News homepage is displayed."
+    },
+    {
+      "title": "Search for 'Generative AI'",
+      "action": "Enter 'Generative AI' in the search bar and submit the search.",
+      "expected_result": "Search results for 'Generative AI' are displayed."
+    },
+    {
+      "title": "Filter results by Past Hour",
+      "action": "Select the filter option for 'Past Hour'.",
+      "expected_result": "Results are filtered to show articles from the past hour."
+    }
+  ],
+  "success_criteria": [
+    "Google News homepage is displayed.",
+    "Search results for 'Generative AI' are shown.",
+    "Results are filtered to show only articles from the past hour."
+  ]
+}

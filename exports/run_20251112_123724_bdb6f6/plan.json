@@ -1,0 +1,37 @@
+{
+  "objective": "Create a new page using a template on Notion.",
+  "starting_url": "https://www.notion.so",
+  "notes": "Ensure you are logged into your Notion account.",
+  "steps": [
+    {
+      "title": "Open Notion",
+      "action": "Navigate to the Notion homepage.",
+      "expected_result": "The Notion dashboard is displayed."
+    },
+    {
+      "title": "Select a Workspace",
+      "action": "Choose the desired workspace where you want to create the page.",
+      "expected_result": "The selected workspace is opened."
+    },
+    {
+      "title": "Access Templates",
+      "action": "Click on the 'Templates' button or option.",
+      "expected_result": "A list of available templates is displayed."
+    },
+    {
+      "title": "Choose a Template",
+      "action": "Select a template from the list.",
+      "expected_result": "The template is opened for customization."
+    },
+    {
+      "title": "Create the Page",
+      "action": "Fill in the necessary details and save the new page.",
+      "expected_result": "A new page is created using the selected template."
+    }
+  ],
+  "success_criteria": [
+    "The new page is successfully created in the selected workspace.",
+    "The page reflects the chosen template.",
+    "The user can view and edit the new page."
+  ]
+}

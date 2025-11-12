@@ -1,0 +1,36 @@
+{
+  "objective": "Add a pencil to the cart on Amazon.",
+  "starting_url": "https://www.amazon.com",
+  "notes": "",
+  "steps": [
+    {
+      "title": "Navigate to Amazon",
+      "action": "Open the starting URL.",
+      "expected_result": "Amazon homepage is displayed."
+    },
+    {
+      "title": "Search for a pencil",
+      "action": "Enter 'pencil' in the search bar and submit the search.",
+      "expected_result": "Search results for pencils are displayed."
+    },
+    {
+      "title": "Select a pencil",
+      "action": "Click on the first pencil item from the search results.",
+      "expected_result": "Pencil product page is displayed."
+    },
+    {
+      "title": "Add pencil to cart",
+      "action": "Click on the 'Add to Cart' button.",
+      "expected_result": "Pencil is added to the cart."
+    },
+    {
+      "title": "Verify cart",
+      "action": "Navigate to the cart to confirm the pencil is added.",
+      "expected_result": "Cart shows the pencil item."
+    }
+  ],
+  "success_criteria": [
+    "Pencil is successfully added to the cart.",
+    "Cart displays the correct pencil item."
+  ]
+}

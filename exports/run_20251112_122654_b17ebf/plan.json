@@ -1,0 +1,26 @@
+{
+  "objective": "Search for a product and sort the results by price on Amazon.",
+  "starting_url": "https://www.amazon.com",
+  "steps": [
+    {
+      "title": "Navigate to Amazon",
+      "action": "Open the starting URL.",
+      "expected_result": "Amazon homepage is displayed."
+    },
+    {
+      "title": "Search for a product",
+      "action": "Enter the product name in the search bar and submit the search.",
+      "expected_result": "Search results for the product are displayed."
+    },
+    {
+      "title": "Sort by price",
+      "action": "Select the option to sort the results by price.",
+      "expected_result": "Search results are sorted by price."
+    }
+  ],
+  "success_criteria": [
+    "Amazon homepage is displayed.",
+    "Search results for the product are displayed.",
+    "Search results are sorted by price."
+  ]
+}

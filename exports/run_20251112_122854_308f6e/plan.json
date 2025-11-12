@@ -1,0 +1,31 @@
+{
+  "objective": "Switch between List and Board views on Linear.",
+  "starting_url": "https://linear.app",
+  "notes": "Ensure you are logged into your Linear account.",
+  "steps": [
+    {
+      "title": "Navigate to the Projects Section",
+      "action": "Click on the 'Projects' tab in the sidebar.",
+      "expected_result": "The Projects section is displayed."
+    },
+    {
+      "title": "Locate the View Toggle",
+      "action": "Find the view toggle button at the top right of the Projects section.",
+      "expected_result": "The view toggle button is visible."
+    },
+    {
+      "title": "Switch to Board View",
+      "action": "Click on the view toggle button and select 'Board'.",
+      "expected_result": "The view changes to Board view."
+    },
+    {
+      "title": "Switch to List View",
+      "action": "Click on the view toggle button again and select 'List'.",
+      "expected_result": "The view changes to List view."
+    }
+  ],
+  "success_criteria": [
+    "User can successfully switch to Board view.",
+    "User can successfully switch back to List view."
+  ]
+}

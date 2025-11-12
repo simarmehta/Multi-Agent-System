@@ -1,0 +1,32 @@
+{
+  "objective": "Search and apply a filter on the page named DB1 in Notion.",
+  "starting_url": "https://www.google.com",
+  "notes": "Ensure you are logged into Notion before starting.",
+  "steps": [
+    {
+      "title": "Open Notion",
+      "action": "Navigate to Notion's website and log in.",
+      "expected_result": "User is logged into their Notion account."
+    },
+    {
+      "title": "Locate DB1 Page",
+      "action": "Search for the page named DB1 in the Notion sidebar.",
+      "expected_result": "DB1 page is displayed."
+    },
+    {
+      "title": "Open DB1 Page",
+      "action": "Click on the DB1 page to open it.",
+      "expected_result": "DB1 page is opened and visible."
+    },
+    {
+      "title": "Apply Filter",
+      "action": "Select the filter option and apply the desired filter criteria.",
+      "expected_result": "Filter is applied to the DB1 page."
+    }
+  ],
+  "success_criteria": [
+    "User is logged into Notion.",
+    "DB1 page is successfully located and opened.",
+    "Filter is applied correctly on the DB1 page."
+  ]
+}
