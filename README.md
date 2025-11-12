@@ -7,7 +7,7 @@ A dual-agent that turns natural language prompts into autonomous browser runs. A
 - 🔀 **Two-agent workflow:** Agent A sanitizes prompts and tracks status while Agent B performs the live browser automation.
 - 🧠 **Structured planning:** `planner.py` calls GPT‑4o to create JSON plans (objective, steps, success criteria) before any browser action.
 - 🖥️ **FastAPI dashboard:** `server.py` + `templates/index.html` provide a glassmorphism UI with live task polling and artifact links.
-- 📦 **Artifact trail:** Every run writes traces, plans, JSON metadata, GIFs, and per-step screenshots under `exports/run_*`.
+- 📦 **Artifact trail:** Every run writes traces, plans, JSON metadata, and per-step screenshots under `exports/run_*`.
 
 ## Requirements
 
